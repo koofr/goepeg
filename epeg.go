@@ -6,7 +6,8 @@ import (
 )
 
 /*
-#cgo linux LDFLAGS: -lepeg -ljpeg
+#cgo linux LDFLAGS: -lepeg
+#cgo darwin LDFLAGS: -lepeg
 #include <stdlib.h>
 #include "Epeg.h"
 */
