@@ -19,4 +19,4 @@ https://github.com/koofr/epeg
 To run tests you have to append `/usr/local/lib` to your `LD_LIBRARY_PATH`.
 
     export LD_LIBRARY_PATH=/usr/local/lib
-    go test goepeg
+    go test
