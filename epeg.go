@@ -122,7 +122,9 @@ func Transform(input string, output string, transform TransformType) error {
 	C.epeg_file_output_set(img, outputCString)
 
 	if code := int(C.epeg_transform(img)); code != 0 {
-		return fmt.Errorf("Epeg transform error: %s", code)
+		buf := [1024]byte{}
+		C.epeg_error(img, (*C.char)((unsafe.Pointer(&buf[0]))))
+		return fmt.Errorf("Epeg transform error: error %d: %s", code, buf)
 	}
 
 	return nil
