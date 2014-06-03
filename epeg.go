@@ -6,6 +6,7 @@ import (
 )
 
 /*
+#cgo CFLAGS: -I/usr/local/include
 #cgo linux LDFLAGS: -lepeg
 #cgo darwin LDFLAGS: -lepeg
 #include <stdlib.h>
