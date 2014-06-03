@@ -12,11 +12,12 @@ https://github.com/koofr/epeg
 
 ## Install
 
+    export CGO_CFLAGS="-I/path/to/epeg/dist/include"
+    export CGO_LDFLAGS="-L/path/to/epeg/dist/lib"
+    export LD_LIBRARY_PATH="-L/path/to/epeg/dist/lib"
+
     go get github.com/koofr/goepeg
 
 ## Testing
 
-To run tests you have to append `/usr/local/lib` to your `LD_LIBRARY_PATH`.
-
-    export LD_LIBRARY_PATH=/usr/local/lib
     go test
