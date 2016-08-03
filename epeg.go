@@ -26,7 +26,14 @@ const (
 	TransformRot270                   = iota
 )
 
-func Thumbnail(input string, output string, size int, quality int) error {
+type ScaleType int
+
+const (
+  ScaleTypeFitMax     ScaleType = iota
+  ScaleTypeFitMin               = iota
+)
+
+func Thumbnail(input string, output string, size int, quality int, scaleType ScaleType) error {
 	var img *C.Epeg_Image
 
 	img = C.epeg_file_open(C.CString(input))
@@ -48,21 +55,41 @@ func Thumbnail(input string, output string, size int, quality int) error {
 	var thumbWidth int
 	var thumbHeight int
 
-	if w > h {
-		if w > size {
-			thumbWidth = size
-			thumbHeight = size * h / w
+  if scaleType == ScaleTypeFitMin {
+  	if w > h {
+	  	if w > size {
+		  	thumbWidth = size * w / h
+			  thumbHeight = size
+      } else {
+      	thumbWidth = w
+			  thumbHeight = h
+		  }
 		} else {
-			thumbWidth = w
-			thumbHeight = h
+			if h > size {
+				thumbWidth = size
+				thumbHeight = size * h / w
+			} else {
+				thumbWidth = w
+				thumbHeight = h
+			}
 		}
 	} else {
-		if h > size {
-			thumbWidth = size * w / h
-			thumbHeight = size
+  	if w > h {
+	  	if w > size {
+		  	thumbWidth = size
+			  thumbHeight = size * h / w
+      } else {
+      	thumbWidth = w
+			  thumbHeight = h
+		  }
 		} else {
-			thumbWidth = w
-			thumbHeight = h
+			if h > size {
+				thumbWidth = size * w / h
+				thumbHeight = size
+			} else {
+				thumbWidth = w
+				thumbHeight = h
+			}
 		}
 	}
 
