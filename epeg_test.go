@@ -135,7 +135,7 @@ func TestThumbnail(t *testing.T) {
 	defer os.Remove(output.Name())
 	output.Close()
 
-	err = Thumbnail(input.Name(), output.Name(), 4, 75)
+	err = Thumbnail(input.Name(), output.Name(), 4, 75, ScaleTypeFitMin)
 	if err != nil {
 		t.Fatal(err)
 	}
