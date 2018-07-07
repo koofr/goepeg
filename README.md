@@ -1,14 +1,11 @@
 goepeg
 ======
 
-Go epeg library bindings
+Go wrapper for epeg.
 
-## Dependencies
+[Epeg](https://github.com/mattes/epeg) is a C library for insanely fast JPEG/JPG thumbnail scaling with the minimum fuss and CPU overhead. It makes use of libjpeg features of being able to load an image by only decoding the DCT coefficients needed to reconstruct an image of the size desired.
 
-To install goepeg you need to install epeg C library.
-Goepeg uses epeg fork that supports transformations.
-
-https://github.com/koofr/epeg
+The library has bundled archive which are automatically linked. This means that installing libepeg and libjpeg is not necessary.
 
 ## Install
 
