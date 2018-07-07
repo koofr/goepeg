@@ -12,12 +12,30 @@ https://github.com/koofr/epeg
 
 ## Install
 
-    export CGO_CFLAGS="-I/path/to/epeg/dist/include"
-    export CGO_LDFLAGS="-L/path/to/epeg/dist/lib"
-    export LD_LIBRARY_PATH="-L/path/to/epeg/dist/lib"
-
-    go get github.com/koofr/goepeg
+```
+go get github.com/koofr/goepeg
+```
 
 ## Testing
 
-    go test
+```
+go test
+```
+
+## Update libepeg
+
+```
+git checkout https://github.com/koofr/epeg.git
+cd epeg
+git checkout feature-static
+mkdir build
+cd build
+cmake ..
+make install
+```
+
+```
+cp epeg/dist/lib/libepeg.a libepeg_linux_amd64.a
+cp epeg/dist/lib/libjpeg.a libjpeg_linux_amd64.a
+cp epeg/dist/include/Epeg.h Epeg.h
+```

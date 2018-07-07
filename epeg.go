@@ -6,8 +6,8 @@ import (
 )
 
 /*
-#cgo linux LDFLAGS: -lepeg
-#cgo darwin LDFLAGS: -lepeg
+#cgo linux LDFLAGS: ${SRCDIR}/libepeg_linux_amd64.a ${SRCDIR}/libjpeg_linux_amd64.a
+#cgo darwin LDFLAGS: ${SRCDIR}/libepeg_darwin_amd64.a ${SRCDIR}/libjpeg_darwin_amd64.a
 #include <stdlib.h>
 #include "Epeg.h"
 */
@@ -29,8 +29,8 @@ const (
 type ScaleType int
 
 const (
-  ScaleTypeFitMax     ScaleType = iota
-  ScaleTypeFitMin               = iota
+	ScaleTypeFitMax ScaleType = iota
+	ScaleTypeFitMin           = iota
 )
 
 func Thumbnail(input string, output string, size int, quality int, scaleType ScaleType) error {
@@ -55,15 +55,15 @@ func Thumbnail(input string, output string, size int, quality int, scaleType Sca
 	var thumbWidth int
 	var thumbHeight int
 
-  if scaleType == ScaleTypeFitMin {
-  	if w > h {
-	  	if w > size {
-		  	thumbWidth = size * w / h
-			  thumbHeight = size
-      } else {
-      	thumbWidth = w
-			  thumbHeight = h
-		  }
+	if scaleType == ScaleTypeFitMin {
+		if w > h {
+			if w > size {
+				thumbWidth = size * w / h
+				thumbHeight = size
+			} else {
+				thumbWidth = w
+				thumbHeight = h
+			}
 		} else {
 			if h > size {
 				thumbWidth = size
@@ -74,14 +74,14 @@ func Thumbnail(input string, output string, size int, quality int, scaleType Sca
 			}
 		}
 	} else {
-  	if w > h {
-	  	if w > size {
-		  	thumbWidth = size
-			  thumbHeight = size * h / w
-      } else {
-      	thumbWidth = w
-			  thumbHeight = h
-		  }
+		if w > h {
+			if w > size {
+				thumbWidth = size
+				thumbHeight = size * h / w
+			} else {
+				thumbWidth = w
+				thumbHeight = h
+			}
 		} else {
 			if h > size {
 				thumbWidth = size * w / h
