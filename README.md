@@ -22,7 +22,7 @@ go test
 ## Update libepeg
 
 ```
-git checkout https://github.com/koofr/epeg.git
+git clone https://github.com/koofr/epeg.git
 cd epeg
 git checkout feature-static
 mkdir build
