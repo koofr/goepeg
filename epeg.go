@@ -6,6 +6,7 @@ import (
 )
 
 /*
+#cgo linux arm LDFLAGS: ${SRCDIR}/libepeg_linux_arm.a ${SRCDIR}/libjpeg_linux_arm.a
 #cgo linux LDFLAGS: ${SRCDIR}/libepeg_linux_amd64.a ${SRCDIR}/libjpeg_linux_amd64.a
 #cgo darwin LDFLAGS: ${SRCDIR}/libepeg_darwin_amd64.a ${SRCDIR}/libjpeg_darwin_amd64.a
 #include <stdlib.h>
