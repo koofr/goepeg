@@ -125,18 +125,23 @@ func TestThumbnail(t *testing.T) {
 	}
 	defer os.Remove(input.Name())
 
-	input.Write(sourceInput)
-	input.Close()
+	if _, err := input.Write(sourceInput); err != nil {
+		t.Fatal(err)
+	}
+	if err := input.Close(); err != nil {
+		t.Fatal(err)
+	}
 
 	output, err := ioutil.TempFile("", "")
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer os.Remove(output.Name())
-	output.Close()
+	if err := output.Close(); err != nil {
+		t.Fatal(err)
+	}
 
-	err = Thumbnail(input.Name(), output.Name(), 4, 75, ScaleTypeFitMin)
-	if err != nil {
+	if err := Thumbnail(input.Name(), output.Name(), 4, 75, ScaleTypeFitMin); err != nil {
 		t.Fatal(err)
 	}
 
@@ -157,18 +162,23 @@ func TestTransform(t *testing.T) {
 	}
 	defer os.Remove(input.Name())
 
-	input.Write(sourceInput)
-	input.Close()
+	if _, err := input.Write(sourceInput); err != nil {
+		t.Fatal(err)
+	}
+	if err := input.Close(); err != nil {
+		t.Fatal(err)
+	}
 
 	output, err := ioutil.TempFile("", "")
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer os.Remove(output.Name())
-	output.Close()
+	if err := output.Close(); err != nil {
+		t.Fatal(err)
+	}
 
-	err = Transform(input.Name(), output.Name(), TransformTransverse)
-	if err != nil {
+	if err := Transform(input.Name(), output.Name(), TransformTransverse); err != nil {
 		t.Fatal(err)
 	}
 

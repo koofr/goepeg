@@ -34,12 +34,16 @@ const (
 )
 
 func Thumbnail(input string, output string, size int, quality int, scaleType ScaleType) error {
-	var img *C.Epeg_Image
+	inputCString := C.CString(input)
+	defer C.free(unsafe.Pointer(inputCString))
 
-	img = C.epeg_file_open(C.CString(input))
+	outputCString := C.CString(output)
+	defer C.free(unsafe.Pointer(outputCString))
+
+	img := C.epeg_file_open(inputCString)
 
 	if img == nil {
-		return fmt.Errorf("Epeg could not open image %s", input)
+		return fmt.Errorf("epeg could not open image %s", input)
 	}
 
 	defer C.epeg_close(img)
@@ -95,10 +99,10 @@ func Thumbnail(input string, output string, size int, quality int, scaleType Sca
 
 	C.epeg_decode_size_set(img, C.int(thumbWidth), C.int(thumbHeight))
 	C.epeg_quality_set(img, C.int(quality))
-	C.epeg_file_output_set(img, C.CString(output))
+	C.epeg_file_output_set(img, outputCString)
 
 	if C.epeg_encode(img) != 0 {
-		return fmt.Errorf("Epeg encode error")
+		return fmt.Errorf("epeg encode error")
 	}
 
 	return nil
@@ -125,7 +129,7 @@ func Transform(input string, output string, transform TransformType) error {
 	case TransformRot270:
 		trans = C.EPEG_TRANSFORM_ROT_270
 	default:
-		return fmt.Errorf("Epeg invalid transformation")
+		return fmt.Errorf("epeg invalid transformation")
 	}
 
 	inputCString := C.CString(input)
@@ -134,12 +138,10 @@ func Transform(input string, output string, transform TransformType) error {
 	outputCString := C.CString(output)
 	defer C.free(unsafe.Pointer(outputCString))
 
-	var img *C.Epeg_Image
-
-	img = C.epeg_file_open(inputCString)
+	img := C.epeg_file_open(inputCString)
 
 	if img == nil {
-		return fmt.Errorf("Epeg could not open image %s", input)
+		return fmt.Errorf("epeg could not open image %s", input)
 	}
 
 	defer C.epeg_close(img)
@@ -151,7 +153,7 @@ func Transform(input string, output string, transform TransformType) error {
 	if code := int(C.epeg_transform(img)); code != 0 {
 		buf := [1024]byte{}
 		C.epeg_error(img, (*C.char)((unsafe.Pointer(&buf[0]))))
-		return fmt.Errorf("Epeg transform error: error %d: %s", code, buf)
+		return fmt.Errorf("epeg transform error: error %d: %s", code, buf)
 	}
 
 	return nil
